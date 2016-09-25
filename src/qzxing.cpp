@@ -195,7 +195,7 @@ QString QZXing::decodeImage(const QImage &image, int maxWidth, int maxHeight, bo
     if(image.isNull())
     {
         emit decodingFinished(false);
-        processingTime = t.elapsed();
+        setProcessTimeOfLastDecoding(t.elapsed());
         return "";
     }
 
@@ -258,7 +258,7 @@ QString QZXing::decodeImage(const QImage &image, int maxWidth, int maxHeight, bo
                 emit tagFound(string);
                 emit tagFoundAdvanced(string, foundedFmt, charSet_);
             }
-            processingTime = t.elapsed();
+            setProcessTimeOfLastDecoding(t.elapsed());
             emit decodingFinished(true);
             return string;
         }
@@ -270,7 +270,7 @@ QString QZXing::decodeImage(const QImage &image, int maxWidth, int maxHeight, bo
 
     emit error(errorMessage);
     emit decodingFinished(false);
-    processingTime = t.elapsed();
+    setProcessTimeOfLastDecoding(t.elapsed());
     return "";
 }
 
@@ -301,7 +301,7 @@ QString QZXing::decodeSubImageQML(QObject *item,
 {
     if(item  == NULL)
     {
-        processingTime = 0;
+        setProcessTimeOfLastDecoding(0);
         emit decodingFinished(false);
         return "";
     }
@@ -361,6 +361,15 @@ QImage QZXing::encodeData(const QString& data)
 int QZXing::getProcessTimeOfLastDecoding()
 {
     return processingTime;
+}
+
+void QZXing::setProcessTimeOfLastDecoding(int processingTime)
+{
+    if (this->processingTime == processingTime)
+        return;
+
+    this->processingTime = processingTime;
+    emit processTimeOfLastDecodingChanged(processingTime);
 }
 
 uint QZXing::getEnabledFormats() const

@@ -13,7 +13,7 @@
 #include <QQmlEngine>
 #endif
 
-#include <qzxingimageprovider.h>
+#include <QZXingImageProvider.h>
 
 // forward declaration
 namespace zxing {
@@ -38,7 +38,7 @@ class
 
     Q_OBJECT
     Q_ENUMS(DecoderFormat)
-    Q_PROPERTY(int processingTime READ getProcessTimeOfLastDecoding)
+    Q_PROPERTY(int processingTime READ getProcessTimeOfLastDecoding WRITE setProcessTimeOfLastDecoding NOTIFY processTimeOfLastDecodingChanged)
     Q_PROPERTY(uint enabledDecoders READ getEnabledFormats WRITE setDecoder NOTIFY enabledFormatsChanged)
 
 public:
@@ -164,6 +164,7 @@ public slots:
       * e.x. setDecoder ( DecoderFormat_QR_CODE | DecoderFormat_EAN_13 | DecoderFormat_CODE_39 )
       */
     void setDecoder(const uint &hint);
+    void setProcessTimeOfLastDecoding(int processingTime);
 
 signals:
     void decodingStarted();
@@ -172,6 +173,7 @@ signals:
     void enabledFormatsChanged();
     void tagFoundAdvanced(QString tag, QString format, QString charSet);
     void error(QString msg);
+    void processTimeOfLastDecodingChanged(int processingTime);
 
 private:
     zxing::MultiFormatReader *decoder;
