@@ -229,7 +229,7 @@ QRectF getTagRect(const ArrayRef<Ref<ResultPoint> > &resultPoints, const Ref<Bit
 		yMax = y;
     	}
 
-	return QRectF(QPointF(xMin / matrixWidth, yMax / matrixHeight), QPointF(xMax / matrixWidth, yMin / matrixHeight));
+        return QRectF(QPointF(xMin / matrixWidth, yMax / matrixHeight), QPointF(xMax / matrixWidth, yMin / matrixHeight));
     }
 
     // 2D QR code
@@ -251,7 +251,7 @@ QRectF getTagRect(const ArrayRef<Ref<ResultPoint> > &resultPoints, const Ref<Bit
 		yMax = y;
     	} 
 
-	return QRectF(QPointF(xMin / matrixWidth, yMax / matrixHeight), QPointF(xMax / matrixWidth, yMin / matrixHeight));
+        return QRectF(QPointF(xMin / matrixWidth, yMin / matrixHeight), QPointF(xMax / matrixWidth,yMax / matrixHeight));
     }
 
     return QRectF();
